@@ -25,6 +25,26 @@ class MonadsTest {
         assertEquals(listToValidate, users)
     }
 
-    private data class User(val firstName: String?)
+    @Test
+    fun `GIVEN list of ids WHEN execute mapToUser on usersMap SHOULD return a list of user`(){
+        val listToValidate = listOf(
+            User(firstName = "Arrascaeta"),
+            User("Everton Riveiro"),
+            User("Adriano Imperador")
+        )
+        val userMap = mapOf(
+            1 to "Arrascaeta",
+            2 to "Everton Riveiro",
+            3 to "Adriano Imperador"
+        )
+        val users = mapToUser(2, userMap) { User(it)}
 
+        assertEquals("Everton Riveiro", users!!.firstName)
+    }
+
+    private data class User(val firstName: String?)
+    fun <T, K, V> mapToUser(id: K, users: Map<K, V>, userMapper: (V) -> T): T? {
+        val userValue = users[id]
+        return userValue?.let { userMapper(it) }
+    }
 }
