@@ -3,7 +3,12 @@ package com.function.programing
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
+/*
+ *Monad functor tests
+ * Note: every monad is also a functor, so it must have a map function
+ */
 class MonadsTest {
+
     @Test
     fun `GIVEN list of ids WHEN execute flapMap on usersMap SHOULD return a list of user`(){
         val listToValidate = listOf(
