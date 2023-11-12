@@ -14,6 +14,8 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("org.functionaljava:functionaljava:4.8.1")
+    testImplementation("io.vavr:vavr:0.9.0")
 }
 
 tasks.test {
