@@ -1,7 +1,6 @@
 package com.function.programing
 
 import org.junit.jupiter.api.Test
-import java.util.*
 import kotlin.test.assertEquals
 
 class Immutable {
@@ -16,4 +15,19 @@ class Immutable {
 
         assertEquals(10, sum)
     }
+    @Test
+    fun `GIVEN return fibonacci WHEN input 8`() {
+        val x = fibonacci(8)
+        assertEquals(21, x)
+    }
+
+    private fun fib(n: Int, a: Int, b: Int): Int {
+       return when(n){
+           0 ->  a
+           1 ->  b
+           else ->  fib(n -1, b, a + b)
+       }
+    }
+    private fun fibonacci(n: Int) = fib(n, 0, 1)
+
 }
