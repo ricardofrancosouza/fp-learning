@@ -55,7 +55,15 @@ class MonadsTest {
         assertEquals(55, result)
     }
 
-    private data class User(val firstName: String?)
+    @Test
+    fun `should concatenate strings using fold`() {
+        val monoid = StringMonoid()
+        val lst = listOf("a", "b", "c", "d")
+        val result = lst.fold(monoid.empty()) { acc, i -> monoid.combine(acc, i)}
+        assertEquals("abcd", result)
+    }
+
+        private data class User(val firstName: String?)
     fun <T, K, V> mapToUser(id: K, users: Map<K, V>, userMapper: (V) -> T): T? {
         val userValue = users[id]
         return userValue?.let { userMapper(it) }
@@ -71,6 +79,13 @@ class MonadsTest {
     interface Monoid<A> {
         fun combine(x: A, y: A): A
         fun empty(): A
+    }
+
+    class StringMonoid : Monoid<String> {
+        override fun combine(x: String, y: String): String  = x + y
+
+        override fun empty(): String = ""
+
     }
 
 }
