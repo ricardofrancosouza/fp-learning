@@ -139,6 +139,9 @@ class MonadsTest {
     object Factorial {
         val monoid = IntProductMonoid()
         fun factorial(n: Int): Int = (1..n).toList().fold(monoid.empty()) {acc, i -> monoid.combine(acc, i)}
+        private fun <A> combineMonoid(lst: List<A>, m: Monoid<A>): A = lst.fold(m.empty()) {acc, i -> m.combine(acc, i)}
+        fun factorial2(n: Int): Int = combineMonoid((1..n).toList(), monoid)
     }
 
+    fun <A> combineMonoid(lst: List<A>, m: Monoid<A>): A = lst.fold(m.empty()) {acc, i -> m.combine(acc, i)}
 }
