@@ -63,7 +63,21 @@ class MonadsTest {
         assertEquals("abcd", result)
     }
 
-        private data class User(val firstName: String?)
+    @Test
+    fun `should apply fold to the boolean list`() {
+        val monoid = AndMonoid()
+        val lst = listOf(false, true, true, true)
+        val result = lst.fold(monoid.empty()) { acc, i -> monoid.combine(acc, i)}
+        assertEquals(false, result)
+    }
+
+    @Test
+    fun `should get factorial when apply fold to the integer list`() {
+        val result = Factorial.factorial(5)
+        assertEquals(120, result)
+    }
+
+    private data class User(val firstName: String?)
     fun <T, K, V> mapToUser(id: K, users: Map<K, V>, userMapper: (V) -> T): T? {
         val userValue = users[id]
         return userValue?.let { userMapper(it) }
@@ -86,6 +100,31 @@ class MonadsTest {
 
         override fun empty(): String = ""
 
+    }
+
+    class AndMonoid : Monoid<Boolean> {
+        override fun combine(x: Boolean, y: Boolean): Boolean = x && y
+
+        override fun empty(): Boolean = true
+
+    }
+
+    class ProductMonoid : Monoid<Double> {
+        override fun combine(x: Double, y: Double): Double = x * y
+
+        override fun empty(): Double = 1.0
+
+    }
+
+    class IntProductMonoid: Monoid<Int> {
+        override fun combine(x: Int, y: Int): Int = x * y
+
+        override fun empty(): Int = 1
+    }
+
+    object Factorial {
+        val monoid = IntProductMonoid()
+        fun factorial(n: Int): Int = (1..n).toList().fold(monoid.empty()) {acc, i -> monoid.combine(acc, i)}
     }
 
 }
