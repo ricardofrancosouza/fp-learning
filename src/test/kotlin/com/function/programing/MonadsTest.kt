@@ -77,6 +77,20 @@ class MonadsTest {
         assertEquals(120, result)
     }
 
+    @Test
+    fun `should combine monoids`() {
+        val lst = listOf(1, 2, 3, 4, 5)
+        val monoidInt = IntMonoid()
+        val resultMonoidInt = combineMonoid(lst, monoidInt)
+        assertEquals(15, resultMonoidInt)
+    }
+
+    @Test
+    fun `should recover factorial when using monoid combination`() {
+        val result = Factorial.factorial2(5)
+        assertEquals(120, result)
+    }
+
     private data class User(val firstName: String?)
     fun <T, K, V> mapToUser(id: K, users: Map<K, V>, userMapper: (V) -> T): T? {
         val userValue = users[id]
