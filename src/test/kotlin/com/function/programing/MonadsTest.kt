@@ -47,9 +47,30 @@ class MonadsTest {
         assertEquals("Everton Riveiro", users!!.firstName)
     }
 
+    @Test
+    fun `should return the sum of the range from 1 to 10 when apply fold to a list of integers`(){
+        val monoid = IntMonoid()
+        val lst = (1..10).toList()
+        val result = lst.fold(monoid.empty()) { acc, i -> monoid.combine(acc, i)}
+        assertEquals(55, result)
+    }
+
     private data class User(val firstName: String?)
     fun <T, K, V> mapToUser(id: K, users: Map<K, V>, userMapper: (V) -> T): T? {
         val userValue = users[id]
         return userValue?.let { userMapper(it) }
     }
+
+    class IntMonoid() : Monoid<Int> {
+        override fun combine(x: Int, y: Int): Int = x + y
+
+        override fun empty(): Int = 0
+
+    }
+
+    interface Monoid<A> {
+        fun combine(x: A, y: A): A
+        fun empty(): A
+    }
+
 }
