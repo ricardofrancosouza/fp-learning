@@ -2,6 +2,8 @@ package com.function.programing
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 /*
  *Monad functor tests
@@ -89,6 +91,15 @@ class MonadsTest {
     fun `should recover factorial when using monoid combination`() {
         val result = Factorial.factorial2(5)
         assertEquals(120, result)
+    }
+    @Test
+    fun `should return true when sending a number 5`() {
+        assertTrue { isPrime(5) }
+    }
+
+    @Test
+    fun `should return false when sending a number 6`() {
+        assertFalse { isPrime(6) }
     }
 
     private data class User(val firstName: String?)
